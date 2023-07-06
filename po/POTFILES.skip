@@ -1,0 +1,6 @@
+tools/annotator.c
+tools/cairo_svg2path.c
+tools/pageswitcher.c
+tools/pageturner.c
+tools/twopageturner.c
+src/lilypond.lang

@@ -1,0 +1,217 @@
+Description: Migrate appdata to metainfo
+ Move /usr/share/appdata/org.denemo.Denemo.appdata.xml to
+ /usr/share/metainfo/org.denemo.Denemo.metainfo.xml.  Fixes Lintian
+ "denemo-data: appstream-metadata-in-legacy-location" warning.
+ .
+ Also, TODO: Fix "denemo-data: appstream-metadata-legacy-format
+ usr/share/appdata/org.denemo.Denemo.appdata.xml" Lintian error.
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Bug: https://savannah.gnu.org/bugs/index.php?62652
+Last-Update: 2022-06-19, 2023-01-27
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,7 +1,7 @@
+ @INTLTOOL_XML_RULE@
+-appdatadir = $(datarootdir)/appdata
+-appdata_DATA = $(appdata_in_files:.xml.in=.xml)
+-appdata_in_files = org.denemo.Denemo.appdata.xml.in
++metainfodir = $(datarootdir)/metainfo
++metainfo_DATA = $(metainfo_in_files:.xml.in=.xml)
++metainfo_in_files = org.denemo.Denemo.metainfo.xml.in
+ 
+ SUBDIRS = \
+   tools \
+@@ -32,7 +32,7 @@
+   intltool-merge.in \
+   intltool-update.in \
+   po/$(GETTEXT_PACKAGE).pot \
+-  org.denemo.Denemo.appdata.xml.in
++  org.denemo.Denemo.metainfo.xml.in
+ 
+ MAINTAINERCLEANFILES = \
+   Makefile.in \
+@@ -62,7 +62,7 @@
+   po/denemo.pot
+ 
+ CLEANFILES = \
+-  $(appdata_DATA)
++  $(metainfo_DATA)
+ 
+ ACLOCAL_AMFLAGS = -I build
+ 
+@@ -91,7 +91,7 @@
+ 	@rm -f $(srcdir)/po/POTFILES.skip
+ 	@cd $(srcdir) && find src -name '*.c' -o -name '*.h' ! -name 'pathconfig.h' | sort >> po/POTFILES.in
+ 	@cd $(srcdir) && find actions -name '*.xml' -o -name '*.scm' | sort >> po/POTFILES.in
+-	@cd $(srcdir) && echo org.denemo.Denemo.appdata.xml.in >> po/POTFILES.in
++	@cd $(srcdir) && echo org.denemo.Denemo.metainfo.xml.in >> po/POTFILES.in
+ 	@cd $(srcdir) && find tools -name '*.c' -o -name '*.h' | sort >> po/POTFILES.skip
+ 	@cd $(srcdir) && find src -name 'pathconfig.h' | sort >> po/POTFILES.skip
+ 	@cd $(srcdir) && find src -name 'lilypond.lang' | sort >> po/POTFILES.skip
+--- a/po/POTFILES.in
++++ b/po/POTFILES.in
+@@ -2456,4 +2456,4 @@
+ actions/quote.l.scm
+ actions/silex.scm
+ actions/Simple.scm
+-org.denemo.Denemo.appdata.xml.in
++org.denemo.Denemo.metainfo.xml.in
+--- /dev/null
++++ b/org.denemo.Denemo.metainfo.xml.in
+@@ -0,0 +1,90 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!-- Copyright 2014 Richard Shann <richard@rshann.plus.com> -->
++<component type="desktop-application">
++  <id>org.denemo.Denemo.desktop</id>
++  <name>Denemo</name>
++  <metadata_license>GFDL-1.3</metadata_license>
++  <project_license>GPL-3.0+</project_license>
++  <project_group>Denemo</project_group>
++  <update_contact>denemo-devel@gnu.org</update_contact>
++  <_summary>Create Music Scores</_summary>
++
++  <description>
++    <_p>
++      Denemo is a music notation program that lets you rapidly enter notation.
++      Music can be typed in at the PC-Keyboard, or played in via MIDI controller.
++      The typesetting is done in the background by LilyPond while you work, and is generally flawless publication quality.
++      Any final tweaks to can be done on the final typeset score with the mouse if needed.
++      This represents an enormous practical improvement over the most programs
++      which require you to re-position colliding notation constantly as you enter the music.
++    </_p>
++    <_p>
++      Unique to Denemo are methods to enter music in a musical, rather than mechanical, manner.
++      You play in a phrase or two of the music using the number keys to indicate the note durations.
++      Audible feedback lets you hear what you have entered; playing the phrase a second time on a real instrument adds the pitches to the rhythm.
++      Again, Denemo gives you audible feedback so that you don’t enter E-flat when you meant D-sharp etc.
++    </_p>
++    <_p>
++      Another great feature is the ability to put links in the score to the original source document that you transcribed from.
++      Clicking on such a link opens the document for you and highlights the bar you are looking at.
++      You can use this to continue work from where you left off, or for looking back at the source to check a doubtful bar.
++    </_p>
++  </description>
++
++  <launchable type="desktop-id">org.denemo.Denemo.desktop</launchable>
++
++  <screenshots>
++    <screenshot type="default">
++      <image width="1920" height="1080">http://www.denemo.org/wp-content/uploads/2013/10/display3.png</image>
++    </screenshot>
++    <screenshot>
++      <image width="1920" height="1080">http://www.denemo.org/wp-content/uploads/2013/10/display4.png</image>
++    </screenshot>
++    <screenshot>
++      <image width="1920" height="1080">http://www.denemo.org/wp-content/uploads/2013/10/display7.png</image>
++    </screenshot>
++    <screenshot>
++      <image width="826" height="1169">http://www.denemo.org/wp-content/uploads/2013/10/display68.png</image>
++    </screenshot>
++  </screenshots>
++
++  <url type="homepage">http://www.denemo.org/</url>
++  <url type="bugtracker">http://www.denemo.org/bugtracker/</url>
++  <url type="faq">http://www.denemo.org/faq/</url>
++  <url type="help">http://www.denemo.org/first-steps/</url>
++  <url type="translate">http://translationproject.org/domain/denemo.html</url>
++  <url type="contact">http://www.denemo.org/community/</url>
++  <url type="vcs-browser">https://git.savannah.gnu.org/cgit/denemo.git</url>
++  <url type="contribute">http://www.denemo.org/get-involved/</url>
++
++  <keywords>
++    <keyword>Music</keyword>
++    <keyword>Notation</keyword>
++    <keyword>Score</keyword>
++    <keyword>Editor</keyword>
++    <keyword>Typesetter</keyword>
++    <keyword>LilyPond</keyword>
++    <keyword>Scorewriter</keyword>
++    <keyword>MIDI</keyword>
++    <keyword>Music</keyword>
++  </keywords>
++
++  <provides>
++    <binary>denemo</binary>
++  </provides>
++
++  <releases>
++    <release version="2.6.0" date="2022-03-11" />
++    <release version="2.5.0" date="2021-03-03" />
++    <release version="2.4.0" date="2020-05-18" />
++    <release version="2.3.0" date="2019-07-22" />
++    <release version="2.2.0" date="2017-07-28" />
++    <release version="2.1.0" date="2017-03-23" />
++    <release version="2.0.0" date="2015-10-30" />
++    <release version="1.2.0" date="2014-12-02" />
++    <release version="1.1.0" date="2013-11-27" />
++    <release version="1.0.0" date="2013-03-27" />
++  </releases>
++
++  <content_rating type="oars-1.1" />
++</component>
+--- a/org.denemo.Denemo.appdata.xml.in
++++ /dev/null
+@@ -1,60 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- Copyright 2014 Richard Shann <richard@rshann.plus.com> -->
+-<component type="desktop-application">
+- <id>org.denemo.Denemo.desktop</id>
+- <name>Denemo</name>
+- <metadata_license>GFDL-1.3</metadata_license>
+- <project_license>GPL-3.0+</project_license>
+- <project_group>Denemo</project_group>
+- <url type="homepage">http://www.denemo.org/</url>
+- <update_contact>denemo-devel@gnu.org</update_contact>
+- <_summary>Create Music Scores</_summary>
+- <description>
+-  <_p>
+-   Denemo is a music notation program that lets you rapidly enter notation. 
+-   Music can be typed in at the PC-Keyboard, or played in via MIDI controller.
+-   The typesetting is done in the background by LilyPond while you work, and is generally flawless publication quality.
+-    Any final tweaks to can be done on the final typeset score with the mouse if needed.
+-    This represents an enormous practical improvement over the most programs
+-    which require you to re-position colliding notation constantly as you enter the music. 
+-  </_p>
+-  <_p>
+-    Unique to Denemo are methods to enter music in a musical, rather than mechanical, manner.
+-    You play in a phrase or two of the music using the number keys to indicate the note durations. 
+-    Audible feedback lets you hear what you have entered; playing the phrase a second time on a real instrument adds the pitches to the rhythm. 
+-    Again, Denemo gives you audible feedback so that you don’t enter E-flat when you meant D-sharp etc. 
+-  </_p>
+-  <_p>
+-  Another great feature is the ability to put links in the score to the original source document that you transcribed from.
+-  Clicking on such a link opens the document for you and highlights the bar you are looking at.
+-  You can use this to continue work from where you left off, or for looking back at the source to check a doubtful bar.
+-  </_p>
+- </description>
+- <screenshots> 
+-  <screenshot type="default">
+-   <image type="source" width="826" height="1169">http://www.denemo.org/wp-content/uploads/2013/10/display68.png</image>
+-  </screenshot>
+-  <screenshot>
+-   <image type="source" width="1920" height="1080">http://www.denemo.org/wp-content/uploads/2013/10/display4.png</image>
+-  </screenshot>
+-  <screenshot>
+-   <image type="source" width="1920" height="1080">http://www.denemo.org/wp-content/uploads/2013/10/display7.png</image>
+-  </screenshot>
+- </screenshots>
+- <keywords>
+-    <keyword>Music</keyword>
+-    <keyword>Notation</keyword>
+-    <keyword>Score</keyword>
+-    <keyword>Editor</keyword>
+-    <keyword>Typesetter</keyword>
+-    <keyword>LilyPond</keyword>
+-    <keyword>Scorewriter</keyword>
+-    <keyword>MIDI</keyword>
+-    <keyword>Music</keyword>
+- </keywords>
+- <releases>
+- <release type="stable" version="2.6.0" date="2022-03-11" />
+- <release type="stable" version="2.7.0" date="2023-03-11" />
+- </releases>
+- <content_rating type="oars-1.1" />
+-</component>

@@ -1,0 +1,53 @@
+From: "Dr. Tobias Quathamer" <toddy@debian.org>
+Date: Wed, 9 Mar 2016 17:57:17 +0100
+Subject: Install soundfont into correct directory
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+Description: This patch changes the path where the soundfont
+ gets installed to the typical location in Debian.
+Author: Dr. Tobias Quathamer <toddy@debian.org>
+Author: Dhionel Díaz <ddiaz@cenditel.gob.ve>
+Bug-Debian: https://bugs.debian.org/817228
+Bug-Debian: https://bugs.debian.org/823972
+Forwarded: not-needed
+Last-Update: 2016-05-12
+---
+ include/denemo/denemo.h | 2 +-
+ soundfonts/Makefile.am  | 4 ++--
+ src/core/utils.c        | 3 ++-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
+
+--- a/include/denemo/denemo.h
++++ b/include/denemo/denemo.h
+@@ -163,7 +163,7 @@
+ 
+ #define COMMANDS_DIR   "actions"
+ #define UI_DIR         "ui"
+-#define SOUNDFONTS_DIR "soundfonts"
++#define SOUNDFONTS_DIR "sf2"
+ #define PIXMAPS_DIR    "pixmaps"
+ #define FONTS_DIR      "denemo"
+ #define LOCALE_DIR     "po"
+--- a/soundfonts/Makefile.am
++++ b/soundfonts/Makefile.am
+@@ -1,2 +1,2 @@
+-soundfontsdir = $(datadir)/${PACKAGE}/soundfonts
+-dist_soundfonts_DATA = A320U-license.txt A320U.sf2 
++soundfontsdir = $(datadir)/sounds/sf2
++dist_soundfonts_DATA = A320U.sf2
+--- a/src/core/utils.c
++++ b/src/core/utils.c
+@@ -3473,9 +3473,10 @@
+     {
+     case DENEMO_DIR_FONTS:
+       return g_build_filename ("/usr/share/fonts/truetype/", get_local_dir (dir), NULL);
++    case DENEMO_DIR_SOUNDFONTS:
++      return g_build_filename ("/usr/share/sounds/", get_local_dir (dir), NULL);
+     case DENEMO_DIR_COMMANDS:
+     case DENEMO_DIR_UI:
+-    case DENEMO_DIR_SOUNDFONTS:
+     case DENEMO_DIR_LILYPOND_INCLUDE:
+       return g_build_filename (get_system_data_dir (), get_local_dir (dir), NULL);
+     case DENEMO_DIR_PIXMAPS:

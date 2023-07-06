@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Denemo>
+  <merge>
+    <title>A Denemo Keymap</title>
+    <author>AT, JRR, RTS</author>
+    <map>
+      <row type="scheme">
+        <action>ToggleTupletNumbering</action>
+        <_label>Tuplet Numbering Switch Off-On</_label>
+        <_tooltip>Inserts a Directive to turn tuplet numbering off from this point in the current staff. Right click on the Directive to switch it to turning tuplet numbering on from this point.</_tooltip>
+      </row>
+    </map>
+  </merge>
+</Denemo>

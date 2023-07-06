@@ -1,0 +1,42 @@
+From: Josue Abarca <jmaslibre@debian.org>
+Date: Fri, 12 Feb 2016 17:06:21 +0100
+Subject: Change fonts path
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+Description: This patch changes the path where denemo looks for the fonts.
+Forwarded: not-needed
+Author: Josué Abarca <jmaslibre@debian.org>
+Last-Update: 2014-08-31
+---
+ include/denemo/denemo.h | 2 +-
+ src/core/utils.c        | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+--- a/include/denemo/denemo.h
++++ b/include/denemo/denemo.h
+@@ -165,7 +165,7 @@
+ #define UI_DIR         "ui"
+ #define SOUNDFONTS_DIR "soundfonts"
+ #define PIXMAPS_DIR    "pixmaps"
+-#define FONTS_DIR      "fonts"
++#define FONTS_DIR      "denemo"
+ #define LOCALE_DIR     "po"
+ 
+ 
+--- a/src/core/utils.c
++++ b/src/core/utils.c
+@@ -3471,10 +3471,11 @@
+ {
+   switch (dir)
+     {
++    case DENEMO_DIR_FONTS:
++      return g_build_filename ("/usr/share/fonts/truetype/", get_local_dir (dir), NULL);
+     case DENEMO_DIR_COMMANDS:
+     case DENEMO_DIR_UI:
+     case DENEMO_DIR_SOUNDFONTS:
+-    case DENEMO_DIR_FONTS:
+     case DENEMO_DIR_LILYPOND_INCLUDE:
+       return g_build_filename (get_system_data_dir (), get_local_dir (dir), NULL);
+     case DENEMO_DIR_PIXMAPS:

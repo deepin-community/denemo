@@ -1,0 +1,19 @@
+Description: Move icon from pixmaps to icons directory
+ See https://wiki.debian.org/AppStream/Guidelines#Icon_best_practices
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Forwarded: no
+Last-Update: 2023-01-28
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/pixmaps/Makefile.am
++++ b/pixmaps/Makefile.am
+@@ -134,7 +134,7 @@
+ icon-rest-4.svg \
+ icon-rest-5.svg 
+ 
+-icondir=$(datadir)/pixmaps
++icondir=$(datadir)/icons/hicolor/64x64/apps
+ icon_DATA=$(srcdir)/org.denemo.Denemo.png
+ 
+ desktopdir = $(datadir)/applications

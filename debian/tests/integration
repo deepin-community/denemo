@@ -1,0 +1,124 @@
+#!/bin/bash
+# modelled after denemo/tests/integration.c
+
+set -u
+
+exec 2>&1
+
+oneTimeSetUp() {
+	export GUILE_AUTO_COMPILE=0
+	export HOME=$AUTOPKGTEST_TMP
+
+	example_dir="examples"
+	fixtures_dir="tests/fixtures"
+	ref_dir="references"
+
+	temp_dir="$AUTOPKGTEST_TMP"
+	mkdir -p $temp_dir/denemo
+	mkdir -p $temp_dir/scm
+}
+
+tearDown() {
+	echo
+}
+
+compare_denemo_files() {
+	a=$1
+	b=$2
+	assertTrue 'The two files should be identical' 'diff "$a" "$b"'
+}
+
+testOpenBlankFile() {
+	input="$fixtures_dir/denemo/blank.denemo"
+
+	echo "Opening $input"
+	denemo -n -e "$input"
+	exit_code=$?
+	assertEquals 'Denemo should have exited with 0' 0 $exit_code
+}
+
+testOpenSaveBlankFile() {
+	output="$temp_dir/denemo/blank.denemo"
+	input="$fixtures_dir/denemo/blank.denemo"
+
+	scheme="(d-SaveAs \"$output\")(d-Quit)"
+	denemo -n -e -a "$scheme" "$input"
+	exit_code=$?
+	assertEquals 'Denemo should have exited with 0' 0 $exit_code
+
+	assertTrue "Output file $output should exist" '[ -r "$output" ]'
+
+	denemo -n -e "$output"
+	exit_code=$?
+	assertEquals 'Denemo should have exited with 0' 0 $exit_code
+
+	compare_denemo_files "$input" "$output"
+}
+
+open_save_complex_file() {
+	input="$1"
+	filename="${input##*/}"
+	base_name="${filename%.*}"
+	extension="${input##*.}"
+
+	output_filename="$base_name.denemo"
+	output="$temp_dir/$extension/$output_filename"
+	reference="$ref_dir/$extension/$output_filename"
+
+	echo "Opening $input"
+	scheme="(d-SaveAs \"$output\")(d-Quit)"
+	if [ "$extension" = "scm" ]; then
+		echo denemo -n -e -i "$input" -a "$scheme"
+		denemo -n -e -i "$input" -a "$scheme" >& /dev/null
+	else
+		denemo -n -e -a "$scheme" "$input" >& /dev/null
+	fi
+	exit_code=$?
+	assertEquals 'Denemo should have exited with 0' 0 $exit_code
+
+	assertTrue "Output file $output should exist" '[ -r "$output" ]'
+
+	echo "Finding and reopening $output"
+	denemo -n -e "$output" >& /dev/null
+	exit_code=$?
+	assertEquals 'Denemo should have exited with 0' 0 $exit_code
+
+	# Comparison
+	if [ -f "$reference" ]; then
+		echo "Comparing $output with the reference $reference"
+		compare_denemo_files "$output" "$reference"
+	elif [ "$extension" = "denemo" ]; then
+		echo "Comparing $input with $output"
+		compare_denemo_files "$input" "$output"
+	else
+		compare_file="$base_name.denemo"
+		if [ -f "$compare_file" ]; then
+			echo "Comparing $compare_file with $output"
+			compare_denemo_files "$compare_file" "$output"
+		fi
+	fi
+}
+
+parse_dir_and_run_complex_test() {
+	path=$1
+	extension=$2
+
+	for i in $(find $path -name "*.$extension"); do
+		open_save_complex_file $i
+	done
+}
+
+testOpenSaveComplexDenemoFilesInExampleDir() {
+	parse_dir_and_run_complex_test $example_dir "denemo"
+}
+
+testOpenSaveComplexDenemoFilesInFixturesDir() {
+	parse_dir_and_run_complex_test $fixtures_dir "denemo"
+}
+
+testOpenSaveComplexScmFilesInFixturesDir() {
+	parse_dir_and_run_complex_test $fixtures_dir "scm"
+}
+
+# load and run shUnit2
+. shunit2
