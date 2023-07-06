@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<score xmlns="http://denemo.org/xmlns/Denemo" version="8">
+  <scoreheader-directives>
+    <directive>
+      <tag>test</tag>
+      <prefix>%{scoreheader prefix%}
+</prefix>
+      <postfix>%{scoreheader postfix%}
+</postfix>
+    </directive>
+  </scoreheader-directives>
+  <paper-directives>
+    <directive>
+      <tag>test</tag>
+      <prefix>%{paper prefix%}
+</prefix>
+      <postfix>%{paper postfix%}
+</postfix>
+    </directive>
+  </paper-directives>
+  <thumbnail>
+    <first-staff>1</first-staff>
+    <last-staff>3</last-staff>
+    <first-measure>1</first-measure>
+    <last-measure>3</last-measure>
+    <first-obj>0</first-obj>
+    <last-obj>2147483647</last-obj>
+  </thumbnail>
+  <lilycontrol>
+    <papersize>a4</papersize>
+    <lilyversion>2.20</lilyversion>
+    <fontsize>18</fontsize>
+    <orientation>1</orientation>
+    <total-edit-time>214</total-edit-time>
+    <score-directives>
+      <directive>
+        <tag>test</tag>
+        <prefix>%{score prefix%}
+</prefix>
+        <postfix>%{score postfix%}
+</postfix>
+      </directive>
+      <directive>
+        <tag>scorewithaffix</tag>
+        <prefix>%{score prefix with affix%}
+</prefix>
+        <postfix>%{score postfix with affix%}
+</postfix>
+        <override>16</override>
+      </directive>
+      <directive>
+        <tag>scorewithalt</tag>
+        <prefix>%{score prefix with alt override set%}</prefix>
+        <override>2</override>
+      </directive>
+    </score-directives>
+  </lilycontrol>
+  <movement-number>1</movement-number>
+  <movement>
+    <edit-info>
+      <staffno>1</staffno>
+      <measureno>2</measureno>
+      <cursorposition>1</cursorposition>
+      <tonalcenter>0</tonalcenter>
+      <zoom>100</zoom>
+      <system-height>100</system-height>
+      <page-zoom>100</page-zoom>
+      <page-system-height>100</page-system-height>
+    </edit-info>
+    <header-directives>
+      <directive>
+        <tag>test</tag>
+        <prefix>%{header prefix%}
+</prefix>
+        <postfix>%{header postfix%}
+</postfix>
+      </directive>
+    </header-directives>
+    <layout-directives>
+      <directive>
+        <tag>test</tag>
+        <prefix>%{layout prefix%}
+</prefix>
+        <postfix>%{layout postfix%}
+</postfix>
+      </directive>
+    </layout-directives>
+    <movementcontrol-directives>
+      <directive>
+        <tag>test</tag>
+        <prefix>%{movementcontrol prefix%}
+</prefix>
+        <postfix>%{movementcontrol postfix%}
+</postfix>
+      </directive>
+      <directive>
+        <tag>movementcontrolwithaffix</tag>
+        <prefix>%{movementcontrol prefix with affix%}
+</prefix>
+        <postfix>%{movementcontrol postfix with affix%}
+</postfix>
+        <override>16</override>
+      </directive>
+    </movementcontrol-directives>
+    <score-info>
+      <tempo>
+        <bpm>120</bpm>
+      </tempo>
+    </score-info>
+    <staves>
+      <staff id="id0"></staff>
+    </staves>
+    <voices>
+      <voice id="id1">
+        <voice-info>
+          <voice-name>Part 1</voice-name>
+          <first-measure-number>1</first-measure-number>
+        </voice-info>
+        <initial-voice-params>
+          <staff-ref staff="id0"></staff-ref>
+          <clef name="treble">
+            <directives>
+              <directive>
+                <tag>test</tag>
+                <prefix>%{clef prefix%}
+</prefix>
+                <postfix>%{clef postfix%}
+</postfix>
+              </directive>
+            </directives>
+          </clef>
+          <key-signature>
+            <modal-key-signature note-name="C" mode="major"></modal-key-signature>
+          </key-signature>
+          <time-signature>
+            <simple-time-signature>
+              <numerator>4</numerator>
+              <denominator>4</denominator>
+            </simple-time-signature>
+          </time-signature>
+        </initial-voice-params>
+        <voice-props>
+          <number-of-lines>5</number-of-lines>
+          <voice-control>1</voice-control>
+          <transpose>0</transpose>
+          <instrument></instrument>
+          <device-port>NONE</device-port>
+          <volume>127</volume>
+          <override_volume>0</override_volume>
+          <mute>0</mute>
+          <midi_prognum>0</midi_prognum>
+          <midi_channel>0</midi_channel>
+          <hasfigures>0</hasfigures>
+          <hasfakechords>0</hasfakechords>
+          <staff-directives>
+            <directive>
+              <tag>test</tag>
+              <prefix>%{staff prefix%}
+</prefix>
+              <postfix>%{staff postfix%}
+</postfix>
+            </directive>
+          </staff-directives>
+          <voice-directives>
+            <directive>
+              <tag>test</tag>
+              <prefix>%{voice prefix%}
+</prefix>
+              <postfix>%{voice postfix%}
+</postfix>
+            </directive>
+          </voice-directives>
+          <clef-directives>
+            <directive>
+              <tag>test</tag>
+              <prefix>%{clef prefix%}
+</prefix>
+              <postfix>%{clef postfix%}
+</postfix>
+            </directive>
+          </clef-directives>
+        </voice-props>
+        <measures>
+          <measure>
+            <chord show="true" id="id2">
+              <duration base="whole"></duration>
+              <directives>
+                <directive>
+                  <tag>test</tag>
+                  <prefix>%{chord prefix%}
+</prefix>
+                  <postfix>%{chord postfix%}
+</postfix>
+                </directive>
+              </directives>
+              <notes>
+                <note id="id3">
+                  <middle-c-offset>-2</middle-c-offset>
+                </note>
+                <note id="id4">
+                  <middle-c-offset>2</middle-c-offset>
+                </note>
+              </notes>
+            </chord>
+          </measure>
+          <measure>
+            <chord show="true" id="id5">
+              <duration base="half"></duration>
+              <directives>
+                <directive>
+                  <tag>testwithaffix</tag>
+                  <prefix>%{chord prefix with affix override set%}
+</prefix>
+                  <postfix>%{chord postfix with affix override set%}
+</postfix>
+                  <override>16</override>
+                </directive>
+              </directives>
+              <notes>
+                <note id="id6">
+                  <middle-c-offset>-1</middle-c-offset>
+                </note>
+                <note id="id7">
+                  <middle-c-offset>1</middle-c-offset>
+                </note>
+              </notes>
+            </chord>
+            <chord show="true" id="id8">
+              <duration base="quarter"></duration>
+              <directives>
+                <directive>
+                  <tag>testwithaffixandlilyoverride</tag>
+                  <prefix>%{chord prefix with lily and affix override set%}
+</prefix>
+                  <postfix>%{chord postfix with lily and affix override set%}
+</postfix>
+                  <override>17</override>
+                </directive>
+              </directives>
+              <notes>
+                <note id="id9">
+                  <middle-c-offset>0</middle-c-offset>
+                </note>
+                <note id="id10">
+                  <middle-c-offset>1</middle-c-offset>
+                </note>
+              </notes>
+            </chord>
+            <chord show="true" id="id11">
+              <duration base="quarter"></duration>
+              <notes>
+                <note id="id12">
+                  <middle-c-offset>1</middle-c-offset>
+                  <directives>
+                    <directive>
+                      <tag>test</tag>
+                      <prefix>%{note prefix%}
+</prefix>
+                      <postfix>%{note postfix%}
+</postfix>
+                    </directive>
+                  </directives>
+                </note>
+              </notes>
+            </chord>
+            <lily-directive>
+              <tag>test</tag>
+              <prefix>%{standalone prefix%}</prefix>
+              <postfix>%{standalone postfix%}</postfix>
+            </lily-directive>
+          </measure>
+        </measures>
+      </voice>
+    </voices>
+  </movement>
+</score>

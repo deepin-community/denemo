@@ -1,4 +1,30 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
+
+# Use all hardening features
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+# Avoid linking with unneeded libs
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_ARCH_OS ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+
+ifneq ($(DEB_HOST_ARCH_OS),linux)
+TMPCONF_OPTS= --enable-portmidi=no
+else
+TMPCONF_OPTS= --enable-portmidi=yes
+endif
 
 %:
 	dh $@
+
+execute_after_dh_autoreconf:
+	intltoolize --copy --force --automake
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(TMPCONF_OPTS)
+
+override_dh_auto_test:
+ifneq ($(DEB_HOST_ARCH),$(filter $(DEB_HOST_ARCH),s390x hurd-i386))
+	GUILE_AUTO_COMPILE=0 VERBOSE=1 dh_auto_test --no-parallel
+endif

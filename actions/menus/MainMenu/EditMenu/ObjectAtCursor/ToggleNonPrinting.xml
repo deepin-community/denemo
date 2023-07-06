@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Denemo>
+  <merge>
+    <title>A Denemo Keymap</title>
+    <author>AT, JRR, RTS</author>
+    <map>
+      <row type="scheme">
+        <action>ToggleNonPrinting</action>
+        <_label>Non-Printing Object (Off/On)</_label>
+        <_tooltip>Makes the object at the cursor non-printing (off/on). For notes this means a rhythm-only note.</_tooltip>
+      </row>
+    </map>
+  </merge>
+</Denemo>

@@ -1,0 +1,12 @@
+Document: denemo
+Title: Denemo Manual
+Author: Richard Shann <Richard.Shann@virgin.net>, Aaron Mehl <aamehl@actcom.net.il>
+Abstract: Denemo is a GUI music notation editor that lets you
+ rapidly enter notation for typesetting via the LilyPond music
+ engraver. You can compose, transcribe, arrange, listen to the
+ music and much more.
+Section: Sound
+
+Format: html
+Index: /usr/share/doc/denemo/denemo-manual.html
+Files: /usr/share/doc/denemo/denemo-manual.html /usr/share/doc/denemo/images/*.png

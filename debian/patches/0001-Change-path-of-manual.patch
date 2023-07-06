@@ -1,0 +1,29 @@
+From: Josue Abarca <jmaslibre@debian.org>
+Date: Fri, 12 Feb 2016 17:06:20 +0100
+Subject: Change path of manual
+
+Description: This patch changes the path where the browser looks
+ for the manual. See Debian Policy 12.3 and 12.4
+ (2022 update: Install to /usr/share/doc/denemo instead of
+  /usr/share/doc/denemo-doc for debhelper compat level 11 and up)
+Author: Josue Abarca <jmaslibre@debian.org.gt>
+Forwarded: not-needed
+Reviewed-by: Anthony Fok <foka@debian.org>
+Last-Update: 2014-08-17, 2022-06-18
+---
+ src/ui/help.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/ui/help.c b/src/ui/help.c
+index f5939d0..3b717df 100644
+--- a/src/ui/help.c
++++ b/src/ui/help.c
+@@ -57,7 +57,7 @@ browse_manual (DenemoAction * action, DenemoScriptParam * param)
+   GError *error = NULL;
+ 
+   /* get the uri to the manual */
+-  gchar *manualpath = g_build_filename (get_system_data_dir (), "manual",
++  gchar *manualpath = g_build_filename ("/usr/share/doc/", "denemo",
+                                         "denemo-manual.html", NULL);
+   gchar *manualuri = url ? g_strdup (url) : g_filename_to_uri (manualpath, NULL, NULL);
+ 

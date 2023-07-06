@@ -1,5 +1,1033 @@
-template-repository (1.0-1) unstable; urgency=medium
+denemo (2.6.18-1) unstable; urgency=medium
 
-  * Initial release
+  * New upstream version 2.6.18
+  * Add to debian/missing-sources denemomanual.lyx for denemo-manual.html
+    and speedykeymap.xml for speedykemap.html
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Anthony Fok <foka@debian.org>  Mon, 27 Feb 2023 09:11:26 -0700
+
+denemo (2.6.16-1) unstable; urgency=medium
+
+  * New upstream version 2.6.16
+  * Remove old patches for Italian and Chinese translations
+  * Remove 0009-Fix-missing-app-icon-on-Wayland.patch
+    which was merged upstream in 2.6.9
+  * Bump Build-Depends/Recommends of lilypond to >= 2.24.1
+
+ -- Anthony Fok <foka@debian.org>  Sun, 26 Feb 2023 07:12:48 -0700
+
+denemo (2.6.0-4) unstable; urgency=medium
+
+  * Move MetaInfo file and icon file from denemo-data to denemo package
+    where the executable and .desktop file reside, thanks to suggestion
+    by appstream-generator.  Fixes wrong information seen in gnome-software
+  * Move icon from /usr/share/pixmaps to /usr/share/icons/hicolor/64x64/apps;
+    see https://wiki.debian.org/AppStream/Guidelines#Icon_best_practices
+
+ -- Anthony Fok <foka@debian.org>  Sat, 28 Jan 2023 04:50:17 -0700
+
+denemo (2.6.0-3) unstable; urgency=medium
+
+  * Revert to guile-2.2-dev maximum compatibility with LilyPond 2.24.0
+  * Bump Standards-Version to 4.6.2 (no change)
+  * Fix Lintian error appstream-metadata-legacy-format
+    in /usr/share/metainfo/org.denemo.Denemo.metainfo.xml;
+    see the updated debian/patches/0010-Migrate-appdata-to-metainfo.patch
+
+ -- Anthony Fok <foka@debian.org>  Sat, 28 Jan 2023 00:23:36 -0700
+
+denemo (2.6.0-2) unstable; urgency=medium
+
+  * Add support for Guile 3.0 and build with guile-3.0-dev (Closes: #969679)
+
+ -- Anthony Fok <foka@debian.org>  Tue, 21 Jun 2022 02:42:42 -0600
+
+denemo (2.6.0-1) unstable; urgency=medium
+
+  * New upstream version 2.6.0
+  * Reorder fields in debian/control and debian/copyright
+  * Add "Rules-Requires-Root: no" to debian/control
+  * Bump Standards-Version to 4.6.1 (no change)
+  * Fix the directory to the Denemo manual: debhelper compatibility
+    level v11 and above installs documentation to /usr/share/doc/denemo
+    rather than /usr/share/doc/denemo-doc in v10 to better comply with
+    Debian Policy, but I overlooked this when I switched from debhelper
+    v10 to v2 in denemo 2.2.0-2 in March 2020, and "Help | Browse Manual"
+    must have stopped working since.  Thanks to Nate Bargmann for the
+    heads-up and helpful suggested fix!  (Closes: #1010635)
+  * Use xdg-open instead of firefox as default browser
+  * Fix application icon under Wayland using g_set_prgname.
+    See https://savannah.gnu.org/bugs/index.php?62651
+  * Fix Lintian denemo-data: appstream-metadata-in-legacy-location
+    but the appstream-metadata-legacy-format error remains.
+    See https://savannah.gnu.org/bugs/index.php?62652
+  * Fix Chinese (simplified) translation and add Chinese (traditional) too
+  * Make paths in debian/*.install more flexible to handle the
+    "denemo" to "org.denemo.Denemo" and "appdata" to "metainfo" renames
+  * Replace override_dh_autoreconf with execute_after_dh_autoreconf
+    in debian/rules
+  * Fix "denemo source: superfluous-file-pattern src/export/screenshot*"
+    Lintian warning
+
+ -- Anthony Fok <foka@debian.org>  Mon, 20 Jun 2022 04:00:46 -0600
+
+denemo (2.5.0-1) unstable; urgency=medium
+
+  * New upstream version 2.5.0
+  * Remove 0008-fix-markup-command-error-lilypond-2-22-guile-2.patch
+    which has been applied upstream.
+
+ -- Anthony Fok <foka@debian.org>  Wed, 03 Mar 2021 18:33:26 -0700
+
+denemo (2.5~rc1-2) unstable; urgency=medium
+
+  * Fix "Not a markup command" error in simplified-book-titling.ily
+    with LilyPond 2.22.0 compiled with Guile 2.2;
+    see 0008-fix-markup-command-error-lilypond-2-22-guile-2.patch
+    and https://savannah.gnu.org/bugs/index.php?59986
+
+ -- Anthony Fok <foka@debian.org>  Mon, 01 Feb 2021 17:19:54 -0700
+
+denemo (2.5~rc1-1) unstable; urgency=medium
+
+  * New upstream release candidate 2.5~rc1
+  * Refresh Debian patches
+
+ -- Anthony Fok <foka@debian.org>  Mon, 01 Feb 2021 13:58:10 -0700
+
+denemo (2.4.0-4) unstable; urgency=medium
+
+  * Source-only upload for migration to testing
+
+ -- Anthony Fok <foka@debian.org>  Sat, 19 Dec 2020 07:00:48 -0700
+
+denemo (2.4.0-3) unstable; urgency=medium
+
+  * Rename binary package ttf-denemo to fonts-denemo
+  * debian/control:
+    - Remove "Recommends: alsa" as the package no longer exists
+    - Update package descriptions with that from denemo.org, focusing more on
+      user experience rather than what language or toolkit it is written in
+    - Bump Standards-Version to 4.5.1 (no change)
+  * debian/rules:
+    - Fix Lintian debian-rules-sets-dpkg-architecture-variable warning
+    - Apply --no-parallel to only dh_auto_test rather than globally
+  * debian/tests/*: Add DEP-8 autopkgtest infrastructure, running shUnit2
+    "integration" and "unit" tests modelled after upstream tests
+  * debian/copyright: Correct and update to latest information:
+    - Fix Denemo’s license, which is GPL-3+, not GPL-3 (GPL-3.0-only)
+    - Add email address of main upstream author Richard Shann
+    - Remove entry on src/core/http.c which was removed upstream
+    - Use SPDX IDs FSFUL and FSFULLR for configure and aclocal.m4 respectively
+    - Add past and present Debian maintainers of this package
+
+ -- Anthony Fok <foka@debian.org>  Mon, 14 Dec 2020 22:38:33 -0700
+
+denemo (2.4.0-2) unstable; urgency=medium
+
+  * Fix FTBFS in 2.4.0-1 by bumping debhelper-compat to level 13
+    which provides writable HOME and XDG_RUNTIME_DIR directories
+    which are needed for calls to denemo in integration and unit tests.
+    Previous tweak for XDG_RUNTIME_DIR is thus removed from debian/rules.
+  * Fix fail-missing errors detected by dh_missing
+
+ -- Anthony Fok <foka@debian.org>  Mon, 16 Nov 2020 04:11:55 -0700
+
+denemo (2.4.0-1) unstable; urgency=medium
+
+  * New upstream version 2.4.0 (Closes: #966867)
+  * Remove debian/patches/0008-Support-Guile-2.2.patch
+    as it has been applied upstream, see
+    https://git.savannah.gnu.org/cgit/denemo.git/commit/?id=9c6ad2d
+  * Refresh Debian patches
+
+ -- Anthony Fok <foka@debian.org>  Mon, 16 Nov 2020 01:26:56 -0700
+
+denemo (2.2.0-2) unstable; urgency=medium
+
+  [ Dr. Tobias Quathamer ]
+  * Switch Vcs-URLs to salsa.d.o
+
+  [ Anthony Fok ]
+  * Add debian/patches/0008-Support-Guile-2.2.patch
+    so that configure can detect guile-2.2 too
+  * debian/control: Build-Depends on guile-2.2-dev
+    instead of guile-2.0-dev (Closes: #885190)
+  * Run wrap-and-sort -a
+  * Apply "cme fix dpkg" fixes:
+    - Organize debian/control fields
+    - Use "Build-Depends: debhelper-compat (= 12)"
+    - Bump Standards-Version to 4.5.0 (no change)
+  * Set debian-branch to debian/master for DEP-14 conformance
+  * Update debian/watch to version=4
+  * Fix Lintian error doc-base-file-references-missing-file
+    in debian/denemo-doc.doc-base
+
+ -- Anthony Fok <foka@debian.org>  Fri, 06 Mar 2020 21:08:40 -0700
+
+denemo (2.2.0-1) unstable; urgency=medium
+
+  * New upstream version 2.2.0
+  * Refresh patches
+  * Avoid linking with unneeded libs
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Sat, 29 Jul 2017 12:46:15 +0200
+
+denemo (2.1-2) unstable; urgency=medium
+
+  * Use debhelper v10
+    - Remove dh-autoreconf, this is now called by default in debhelper v10
+    - Add --no-parallel, the package FTBFS otherwise
+  * Update Standards-Version to 4.0.0
+    - Update d/copyright, use HTTPS URL
+  * Define DEB_HOST_ARCH with dpkg-architecture
+  * Add Multi-Arch: foreign to arch:all packages
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Wed, 05 Jul 2017 16:35:41 +0200
+
+denemo (2.1-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.1
+  * Refresh patches
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Sat, 25 Mar 2017 17:53:51 +0100
+
+denemo (2.0.14-2) unstable; urgency=medium
+
+  * Partly revert commit be98dc7.
+    The tests still fail on s390x and hurd-i386, so skip them for now.
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Wed, 01 Feb 2017 17:11:24 +0100
+
+denemo (2.0.14-1) unstable; urgency=medium
+
+  * New upstream version 2.0.14.
+    Among all the improvements, the most notable is most likely the
+    new tooltip system that no longer plasters the screen with
+    multiple tooltips which block the user from reaching the actual
+    interface.  According to upstream author Richard Shann:
+       "We have been plagued for some time by changes to Gtk which have
+        made tooltips unusable in some builds.
+        I've implemented a new tooltip system that won't be affected
+        by what Gtk does with its tooltips in future. It works
+        somewhat differently (unfortunately): you need to move the
+        mouse over the item for the tooltip to pop up. The tooltip
+        can be dismissed either by quitting it or by clicking -
+        it won't reappear for the same item unless you first move
+        off the item and return. So in practice a shake of the mouse
+        will remove the tooltip, (in and out of the tip).
+        But, best of all the speed with which they pop-up is once again
+        controllable."
+  * Modify debian/watch to check PGP signature in .sig file.
+    Upstream uses .tar.gz.sig rather than .tar.gz.asc for their
+    PGP signature files.
+  * Add myself to the list of Uploaders.
+  * Remove exceptions for s390x, hurd-i386 and ppc64el.
+    lilypond, since 2.18.2-7, builds correctly in all these three
+    architectures, so we no longer need to skip tests for them.
+
+ -- Anthony Fok <foka@debian.org>  Tue, 31 Jan 2017 10:38:10 -0700
+
+denemo (2.0.10-1) UNRELEASED; urgency=medium
+
+  * Imported Upstream version 2.0.10
+    - Drop patch for Makefiles, applied upstream
+    - Drop patch for zoom correction, applied upstream
+    - Refresh patches
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Fri, 15 Jul 2016 17:02:57 +0200
+
+denemo (2.0.8-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.8
+  * Refresh patches
+  * Add correct search path for soundfonts.
+    Thanks to Dhionel Díaz <ddiaz@cenditel.gob.ve> (Closes: #823972)
+  * Update Standards-Version to 3.9.8, no changes needed
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Thu, 12 May 2016 18:17:32 +0200
+
+denemo (2.0.6-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.6
+  * Refresh patches
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Fri, 15 Apr 2016 21:13:43 +0200
+
+denemo (2.0.4-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.4
+  * Update patches
+  * Add patch to install soundfont into usual directory.
+    Thanks to Dmitry Eremin-Solenikov <dbaryshkov@gmail.com> (Closes: #817228)
+  * Enable all hardening features
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Wed, 09 Mar 2016 18:09:22 +0100
+
+denemo (2.0.2-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.2
+  * Set myself as maintainer with consent from Josue
+    - Acknowledge my previous NMU
+  * Update Vcs-* URLs
+  * Remove patches which have been applied upstream
+  * Refresh other patches
+  * Update d/copyright
+  * Correctly remove obsolete conffile
+  * Update d/watch
+  * Install examples in the expected location
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Fri, 12 Feb 2016 22:54:02 +0100
+
+denemo (2.0.0-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Imported Upstream version 2.0.0 (Closes: #803002)
+  * Refresh patches
+  * Add patch to fix failing testsuite. (Closes: #802064)
+  * Add patch to fix automake warnings
+  * Remove Replaces: and Breaks: for ancient versions no longer in oldstable
+  * Add patch to add MimeType handling to .desktop file.
+    Thanks to Logan Rosen <logan@ubuntu.com> (Closes: #768491)
+  * Add patch to fix italian translation.
+    Thanks to Pietro Battiston <me@pietrobattiston.it> (Closes: #773264)
+
+ -- Dr. Tobias Quathamer <toddy@debian.org>  Sun, 17 Jan 2016 14:02:26 +0100
+
+denemo (1.1.8-2) unstable; urgency=medium
+
+  * Patches added in order fix the zoom value in multiple example
+    files. This was causing a failure in the integration tests:
+    - GraceLilyPondBugWorkaround.diff
+    - ChordDiagrams.diff
+    - TemperamentShiftingPlayback.diff
+  * debian/rules
+    - dh_auto_test is now disabled in some architectures:
+      + hurd-i386, and ppc64el: lilypond is not available and
+        is required for the tests.
+      + s390x the binary is not properly executed without full
+        installation which is preventing the tests from proper
+        execution in this architecture.
+    - GUILE_AUTO_COMPILE variable added in order to disable the guile
+      auto-compilation during the tests execution.
+  * debian/control
+    - lilypond build dependency is now disabled for s390x, hurd-i386, and
+      ppc64el because it is only used during the integration tests.
+    - Standards updated to 3.9.6, no changes required.
+  * debian/copyright:
+    - Short names for the small permissive licenses added.
+    - Paths updated.
+    - Copyright for libs/libsffile added.
+
+ -- Josue Abarca <jmaslibre@debian.org>  Sun, 28 Sep 2014 21:47:13 -0600
+
+denemo (1.1.8-1) unstable; urgency=medium
+
+  * Imported Upstream version 1.1.8
+  * remove_conflict_file.diff patch removed. This was fixed upstream.
+  * help.c.diff patch updated.
+  * Makefile.am.diff patch updated.
+  * configure.in.diff patch updated.
+  * add_format_arguments.diff patch removed. This was fixed upstream.
+  * remove_sh_extension.diff patch removed. This was fixed upstream.
+  * shebang.diff patch updated.
+  * Fix-test-for-aubio-4.patch removed. Fixed upstream.
+  * update_aubio.diff patch removed. Fixed upstream.
+  * debian/rules:
+    - get-orig-source target removed, we are now using the released
+      tarball.
+    - Set VERBOSE=1 in order to get failing tests' stdout/err so we have
+      some information when a build fails.
+    - XDG_RUNTIME_DIR variable was added, a temporal directory is now
+      created, and his permissions are configured accordingly to the XDG
+      Base Directory Specification in order to run the upstream tests as
+      part of the build process.
+    - A new condition to disable portmidi on non-linux architectures was
+      added.
+  * fonts_path.diff patch added in order to change the path where denemo
+    looks for the fonts in a Debian system.
+  * tests_common.diff patch added in order to use the full path to the
+    binary during the tests.
+  * debian/docs Removed the README file, because it was dropped by
+    upstream.
+  * debian/control
+    - build-dependency libportmidi-dev is now only for linux-any.
+    - Replaced gtk+ with GTK+ in the packages descriptions and synopsis.
+    - Build dependency changed from guile-1.8 to guile-2.0
+      (Closes: 746005).
+
+ -- Josue Abarca <jmaslibre@debian.org>  Mon, 08 Sep 2014 19:32:52 -0600
+
+denemo (1.1.2~20140129+git02c86bb-1) unstable; urgency=low
+
+  * Imported Upstream version 1.1.2~20140129+git02c86bb
+  * Makefile.am.diff patch updated.
+  * add_format_arguments.diff patch updated.
+  * doc_Makefile.am.diff patch updated.
+  * remove_sh_extension.diff patch pudated.
+  * update_aubio.diff patch updated and moved to the top of the pile.
+  * shebang.diff patch updated.
+  * Fix-test-for-aubio-4.patch patch added in order to fix issues in autoconf.
+  * POTFILES.in and POTFILES.skip removed from debian/clean
+  * add_format_arguments.diff patch updated.
+  * remove_conflict_file.diff patch added in order to remove a file left
+    behind by a CVS.
+  * debian/rules get-orig-source target added.
+  * debian/control new build dependencies:
+    - gtk-doc-tools
+    - libgtk-3-dev (replaces libgtk2.0-dev)
+    - libsndfile1-dev
+    - ibgtksourceview-3.0-dev (replaces libgtksourceview2.0-dev)
+    - gtk-doc-tools
+    - lilypond because it is required to execute the integration tests.
+  * Upload to unstable.
+
+ -- Josue Abarca <jmaslibre@debian.org>  Thu, 13 Mar 2014 22:04:17 -0600
+
+denemo (1.1.0-1) experimental; urgency=low
+
+  * Imported Upstream version 1.1.0
+  * help.c.diff patch updated.
+  * Makefile.am.diff patch updated.
+  * denemo.conf.diff patch removed, because the original file was deleted
+    by upstream in 27adac0.
+  * ouput-typo.diff Patch deleted, spelling error fixed upstream.
+  * configure.in.diff patch updated.
+  * debian/control
+    - New build dependency rubberband-dev.
+    - Dependency in automake1.11 removed.
+    - DM-Upload-Allowed removed, thanks to my previous sponsor.
+    - librubberband-dev dependency fixed.
+    - New buildependency intltool.
+    - Standards updated to 3.9.5, no changes required.
+  * debian/rules
+    - override_dh_autoreconf added in order to call intltoolize.
+    - Removed dh_fixperms override, fixed upstream.
+  * add_format_arguments.diff patch added to pass format arguments in
+    order to avoid possible security problems and build using Hardening
+    Options.
+  * debian/denemo.install
+    - denemo.conf removed from the list because it was
+      deleted upstream.
+  * debian/denemo-data.install
+    - Added the new denemo_file_update bash script.
+  * shebang.diff patch added in order to add the shebang to
+    denemo_file_update.sh.
+  * remove_sh_extension.diff patch added in order to rename
+    denemo_file_update.sh.
+  * denemo_file_update.1 man page added.
+  * debian/denemo-data.manpages now includes the manpage for
+    denemo_file_update.sh.
+  * debian/clean Added the auto-generated files m4/intltool.m4,
+    po/POTFILES.skip, po/POTFILES.in.
+  * update_aubio.diff patch added to make denemo work with
+    aubio4 (Closes: 733967).
+  * keywords-desktop-entry patch added in order to add the missing entry
+    and a missing semicolon.
+  * debian/upstream/signing-key.asc added in order to use uscan to verify
+    upstream signature at downloads.
+  * debian/watch pgpsigurlmangle option added to verify the PGP signature.
+  * debian/denemo.{postinst,postrm,preinst} Maintainer scripts added in
+    order to remove the obsolete conffile /etc/denemo/denemo.conf
+  * debian/copyright Comment added to the Denemo.ttf license.
+
+ -- Josue Abarca <jmaslibre@debian.org>  Sat, 04 Jan 2014 13:46:43 -0600
+
+denemo (0.9.6-1) experimental; urgency=low
+
+  * New upstream release
+  * glib-single-include.diff patch droped, merged upstream.
+  * Move to debhelper 9
+    - debian/compat, and debian/control build dependency on debhelper,
+      raised to 9.
+    - debian/rules override_dh_auto_configure droped, debhelper 9 sets
+      the environment variables listed by dpkg-buildflags by default.
+  * debian/copyright Multiple years updated, and two files removed.
+
+ -- Josue Abarca <jmaslibre@debian.org>  Fri, 21 Sep 2012 18:19:42 -0600
+
+denemo (0.9.4-1) experimental; urgency=low
+
+  * New upstream release (Closes: 663394)
+    - Menu order improved (Closes: 639349)
+  * format_error_strings.diff patch droped because this release fixed
+    the errors in the calls to g_print.
+  * debian/control
+    - Build dependency on libgtksourceview-3.0-dev added.
+    - Build dependency on libevince-dev added.
+    - Build dependency on libportmidi-dev added.
+  * debian/rules
+    - The override_dh_auto_install that was intended to delete empty
+      directories, was droped, upstream fixed this issue.
+    - In override_dh_fixperms a new call to chmod was added in order to
+      fix permissions of the file "ScoreProlog".
+  * debian/copyright
+    - Format field updated.
+    - Multiple files added.
+
+ -- Josue Abarca <jmaslibre@debian.org>  Wed, 22 Aug 2012 23:33:52 -0600
+
+denemo (0.9.2-3) unstable; urgency=low
+
+  * Set the environment variables listed by dpkg-buildflags using
+    a less intrusive approach:
+    - debian/rules override_dh_auto_configure added to set the
+      environment variables listed by dpkg-buildflags.
+    - debian/compat changed from 9 to 7
+    - debian/control debhelper build dependency version reverted
+      from 9 to 7.0.50~
+
+ -- Josue Abarca <jmaslibre@debian.org>  Tue, 13 Aug 2012 17:08:04 -0600
+
+denemo (0.9.2-2) unstable; urgency=low
+
+  * glib-single-include.diff Patch added in order to include glib.h
+    instead of individual header. Thanks to Michael Biebl for his help to
+    fix this bug (closes: 665520).
+  * debian/control
+    - New maintainer address. Thanks to Jan Hauke Rahm for his sponsorships.
+    - Standards Version updated to 3.9.3: No changes required.
+  * Denemo now uses security hardening build flags  (closes: 683563)
+    - debian/compat, and debian/control build dependency on debhelper,
+      raised to 9 in order to set environment variables listed by
+      dpkg-buildflags by default.
+    - format_error_strings.diff patch added to format error strings safely.
+
+ -- Josue Abarca <jmaslibre@debian.org>  Fri, 27 Jul 2012 23:37:51 -0600
+
+denemo (0.9.2-1) unstable; urgency=low
+
+  * New upstream release
+  * Makefile.am.diff patch updated.
+  * use_libsmf_of_os.diff patch droped because now upstream uses the
+    shared library libsmf installed in the O. S. by default (See the
+    "--with-included-smf" option in the configure script).
+  * debian/ttf-denemo.install updated in order to include all the fonts.
+  * debian/copyright
+    - Format field updated.
+    - Denemo.ttf's license changed from SIL-Open-Font-License to GPL-3+
+      because this is a new font released under a different license.
+    - Fetta.ttf name updated to feta.ttf.
+    - Emmentaler.ttf copyright information added.
+  * debian/ttf-denemo.install updated in order to include all the fonts.
+  * debian/rules override_dh_auto_install added in order to delete empty
+    directories that are not needed by denemo.
+  * debian/control
+    - Vcs-Git field updated.
+    - Vcs-Browser field updated.
+    - Build dependency on flex and bison droped, because
+      upstream is no longer using flex and bison.
+
+ -- Josue Abarca <jmaslibre@debian.org.gt>  Mon, 03 Oct 2011 21:59:04 -0600
+
+denemo (0.9.0-3) unstable; urgency=low
+
+  * debian/copyright
+    - References about the file soundfonts/A320U.sf2 were added.
+    - Syntax's bugs were fixed.
+    - Files: m4/binreloc.m4 License short_name fixed.
+
+ -- Josue Abarca <jmaslibre@debian.org.gt>  Fri, 20 May 2011 13:41:49 -0600
+
+denemo (0.9.0-2) unstable; urgency=low
+
+  * debian/rules Check if denemo-data (arch-all package) is being built
+    before calling chmod in order to fix FTBFS.
+
+ -- Josue Abarca <jmaslibre@debian.org.gt>  Tue, 17 May 2011 13:16:59 -0600
+
+denemo (0.9.0-1) unstable; urgency=low
+
+  * New upstream release. (closes: Bug#601639)
+  * actions_Makefile.am.diff patch dropped, because it is no longer useful.
+  * configure.in.diff patch updated.
+  * use_libsmf_of_os.diff patch updated.
+  * debian/rules changed to use the sequence addon -with autoreconf-.
+  * librsvg2-dev added to Build-Depends.
+  * debian/control
+    - Vcs-Git and Vcs-Browser fields added.
+    - Standards Version updated to 3.9.2: Use Replaces+Breaks
+      instead of Conflicts.
+    - Minor changes to descriptions.
+    - Build dependency on dh-autoreconf added.
+    - Build dependency on autotools-dev dropped.
+    - Build dependency on libjack-dev dropped.
+    - Timidity, playmidi, and jackd where removed from the Recommends.
+    - Csound was removed from the Suggests.
+    - DM-Upload-Allowed control field added.
+  * debian/autogen.sh dropped.
+  * debian/copyright updated and rewrote to use DEP 5 rev. 174.
+  * debian/rules override_dh_fixperms added in order to fix permissions of
+    the file "actions/lalr.scm".
+  * debian/watch file updated.
+
+ -- Josue Abarca <jmaslibre@debian.org.gt>  Sat, 14 May 2011 18:36:04 -0600
+
+denemo (0.8.16-1) unstable; urgency=low
+
+  * New upstream release
+  * debian/control build dependency on autopoint added
+  * debian/dirs removed because dh_install creates all dirs needed
+  * debian/smfsh.1 manpage deleted, now it is part of the package
+    smf-utils
+  * debian/rules export removed, because it is unnecessary.
+  * use_libsmf_of_os.diff patch modified to avoid building
+    libsmf.a because this is unnecessary.
+
+ -- Josue Abarca <jmaslibre@debian.org.gt>  Tue, 24 May 2010 19:16:49 -0600
+
+denemo (0.8.14-1) unstable; urgency=low
+
+  * New upstream release
+  * prefops.c.diff patch removed. Bug fixed by upstreamer
+  * Makefile.am.diff modified to remove installed
+    makefiles
+  * doc_Makefile.am.diff patch DEP-3 doc updated
+  * help.c.diff and configure.in.diff patch updated to
+    match new upstreamer version
+  * debian/ttf-denemo.install fetta.ttf font added
+  * use_libsmf_of_os.diff patch added in ordet to use
+    shared library libsmf from O. S., instead of
+    static version
+  * debian/control build dependency on libsmf added
+  * debian/denemo.install smfsh droped because it is
+    included in the libsmf0-utils debian package
+  * debian/denemo.manpages smfsh.1 droped
+  * debian/copyright Info about file fonts/fetta.ttf
+    added
+
+ -- Josue Abarca <jmaslibre@debian.org.gt>  Tue, 03 Apr 2010 14:08:29 -0600
+
+denemo (0.8.12-1) unstable; urgency=low
+
+  * New upstream release
+  * 00_desktop.patch removed because denemo.desktop from
+    upstreamer is now freedesktop.org compliant
+  * denemo.conf.diff patch added to change the default
+    browser, pdf viewer and text editor (closes: Bug#528858)
+  * prefops.c.diff patch added in order to set the default
+    audio driver of fluidsynth to "alsa".
+  * Patches actions_Makefile.am.diff, doc_Makefile.am.diff
+    and Makefile.am.diff added to avoid installing
+    Makefiles (solves bugs known upstream as #28902
+    and #28844)
+  * configure.in.diff patch added to set the
+    AM_GNU_GETTEXT_VERSION (solves bug known upstream
+    as #29016)
+  * debian/copyright Copyright of A320U.sf2 added
+  * debian/control
+    - Updated policy to 3.8.4 (no changes needed)
+    - Build dependency on flex and bison added
+    - Recommends alsa | jackd added
+    - Package split into denemo, denemo-data, denemo-doc
+      and ttf-denemo
+  * denemo-data.install, denemo.install, denemo-doc.docs
+    and ttf-denemo.install added.
+  * Denemo's manual and examples have been
+    moved to /usr/share/doc/denemo-doc/
+  * debian/denemo.1 manpage improved
+  * New Maintainer Thanks to Guenter Geiger for his previous work
+    (closes: Bug#546955)
+  * Switch to dpkg-source 3.0 (quilt) format
+  * Converting patches from dpatch to quilt
+  * debian/README.source deleted, because with 3.0 (quilt)
+    this file is not needed
+  * DEP-3 doc of the patches improved
+  * debian/autogen.sh added to properly call to autoreconf
+  * debian/rules
+    - Call to debian/autogen.sh added
+    - Delete files that are auto-generated by autoreconf
+
+ -- Josue Abarca <jmaslibre@debian.org.gt>  Tue, 02 Feb 2010 14:08:29 -0600
+
+denemo (0.8.10-1) unstable; urgency=low
+
+  * QA upload.
+  * New upstream release.
+  * Fixed debian/copyright to contain all exceptions.
+  * Debhelper 7 used to simplify debian/rules.
+  * Subtle fix (missing slash) in watch file.
+
+ -- Pietro Battiston <toobaz@email.it>  Thu, 05 Nov 2009 22:58:38 +0100
+
+denemo (0.8.8-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Repackaged from scratch without CDBS.
+  * New upstream release.
+    Closes: #513285
+    - Undo/redo data loss was fixed in 0.7.6
+      Closes: #375606
+    - Enhances lilypond compatibility
+      Closes: #272613
+    - Disables default keyboard focus to "open file" button
+      Closes: #425579
+    - Fixes pixbuf loading
+      Closes: #522692
+    - Menu item was added, with icon
+      Closes: #299398
+  * Patched view.c to show windows icon (solves bug known upstream as #27003)
+
+ -- Pietro Battiston <toobaz@email.it>  Thu, 10 Sep 2009 11:12:08 +0200
+
+denemo (0.7.7-3.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix recommends, as per release goal (Closes: #439929).
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Mon, 31 Mar 2008 00:40:06 +0200
+
+denemo (0.7.7-3) unstable; urgency=low
+
+  * Added libsamplerate0-dev build dep (closes: #470448)
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Tue, 11 Mar 2008 11:12:29 +0100
+
+denemo (0.7.7-2) unstable; urgency=low
+
+  * Recompile against new libaudbio and libfftw3-dev (closes: #465628)
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Wed, 20 Feb 2008 12:25:14 +0100
+
+denemo (0.7.7-1) unstable; urgency=low
+
+  * New upstream version
+  * Added portaudio dependency
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Fri, 08 Feb 2008 10:55:42 +0100
+
+denemo (0.7.5-5) unstable; urgency=low
+
+  * configure with --enable-alsa on linux only
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Mon, 23 Oct 2006 09:46:28 +0200
+
+denemo (0.7.5-4) unstable; urgency=low
+
+  * exclude libasound2-dev from build depends for non-linux archs
+    (closes: #376591)
+  * removed empty language entries from desktop file (closes: #387949)
+  * Added dependency on librsvg2-common which is needed to load the
+    icons
+  * Set policy version to 3.7.2
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Mon, 23 Oct 2006 09:45:31 +0200
+
+denemo (0.7.5-3) unstable; urgency=low
+
+  * include fix_playback patch (backport from CVS) (closes:
+    #369537)
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Mon,  3 Jul 2006 15:00:00 +0200
+
+denemo (0.7.5-2) unstable; urgency=low
+
+  * disabled redo which caused crashes
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Thu, 29 Jun 2006 13:05:20 +0200
+
+denemo (0.7.5-1) unstable; urgency=low
+
+  * New upstream version
+  * removed include patch from cvs version
+  * removed exportmidi patch
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Thu, 13 Apr 2006 11:24:24 +0200
+
+denemo (0.7.4-2) unstable; urgency=low
+
+  * Included the exportmidi patch
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Wed, 21 Dec 2005 10:34:52 +0100
+
+denemo (0.7.4-1) unstable; urgency=low
+
+  * New upstream version
+  * Bumped policy version to 3.6.2
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Fri,  4 Nov 2005 14:21:57 +0100
+
+denemo (0.7.2b+0.7.3beta2-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Fri,  8 Apr 2005 10:44:59 +0200
+
+denemo (0.7.2b+0.7.3beta1-1) experimental; urgency=low
+
+  * new upstream version
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Thu, 10 Mar 2005 15:25:30 +0100
+
+denemo (0.7.2a.cvs041008-2) experimental; urgency=low
+
+  * Added automake1.7 and libtool build depends to make CVS version autobuildable
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Tue, 12 Oct 2004 16:32:06 +0200
+
+denemo (0.7.2a.cvs041008-1) experimental; urgency=low
+
+  * CVS snapshot
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Fri,  8 Oct 2004 10:35:47 +0200
+
+denemo (0.7.2a-7) unstable; urgency=low
+
+  * Added missing gtk2.0 build depends
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Mon, 30 Aug 2004 16:27:08 +0200
+
+denemo (0.7.2a-6) unstable; urgency=low
+
+  * Back to gtk2.0, because of advanced lilypond support
+  * Fixed the about dialog
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Fri, 27 Aug 2004 13:21:44 +0200
+
+denemo (0.7.2a-5) unstable; urgency=low
+
+  * reapplied lilypond patch
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Tue, 10 Aug 2004 23:51:03 +0200
+
+denemo (0.7.2a-4) unstable; urgency=low
+
+  * Removed gtk2 support, as it seems to cause problems
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Fri, 16 Jul 2004 19:03:24 +0200
+
+denemo (0.7.2a-3) unstable; urgency=low
+
+  * Automatic lilypond file conversion patch applied (closes: #98660)
+  * Added csound dependency
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Thu,  8 Jul 2004 17:33:25 +0200
+
+denemo (0.7.2a-2) unstable; urgency=low
+
+  * fixed problem with oss sequencer (closes: #235765)
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Tue,  2 Mar 2004 11:56:39 +0100
+
+denemo (0.7.2a-1) unstable; urgency=low
+
+  * New upstream version
+  * New Maintainer (closes: #224830)
+  * added the analysis plugin (--with-plugin=analysis)
+  * not distributing font pixmaps (are included in the binary already)
+  * using gtk2
+  * included alsa support (--enable-alsa)
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>  Wed, 28 Jan 2004 11:01:22 +0100
+
+denemo (0.6.0-2) unstable; urgency=low
+
+  * Policy version 3.5.8:
+    - Drop support for DEB_BUILD_OPTIONS=debug; support noopt instead.
+  * frogparser.y: Remove duplicate declaration of ORNAMENT so that this can
+    be processed by current versions of bison.
+  * debian/copyright: Refer to /usr/share/common-licenses/GPL.
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 25 Jan 2003 12:53:03 +0000
+
+denemo (0.6.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * No longer need to patch configure for libxml2.
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 30 May 2002 02:44:07 +0100
+
+denemo (0.5.9-2) unstable; urgency=medium
+
+  * Correct include paths for libxml2-dev 2.4.19 (closes: #141915).
+
+ -- Colin Watson <cjwatson@debian.org>  Tue,  9 Apr 2002 12:26:21 +0100
+
+denemo (0.5.9-1) unstable; urgency=low
+
+  * New upstream release (closes: #140468).
+
+ -- Colin Watson <cjwatson@debian.org>  Tue,  2 Apr 2002 23:51:11 +0100
+
+denemo (0.5.8-2) unstable; urgency=low
+
+  * Update config.guess and config.sub from autotools-dev 20020201.1.
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 16 Feb 2002 19:59:07 +0000
+
+denemo (0.5.8-1) unstable; urgency=low
+
+  * The "Groundhog Day" release.
+  * New upstream release. All applicable Debian patches to 0.5.7 are now
+    upstream.
+  * easylyparser.y: Change type of getced to int, for machines where char is
+    unsigned by default.
+  * Install pixmaps in /usr/share/denemo/pixmaps, not /etc/denemo/pixmaps.
+    This requires some explicit migration code, since the old versions were
+    conffiles by mistake - but, at the moment, the pixmaps are compiled into
+    denemo and are only provided in the binary package as documentation, so
+    local changes won't have had any effect anyway.
+  * Prefer libxml2 over libxml1, since their development packages don't
+    conflict.
+
+ -- Colin Watson <cjwatson@debian.org>  Sat,  2 Feb 2002 23:36:56 +0000
+
+denemo (0.5.7-1) unstable; urgency=low
+
+  * New upstream release:
+    - Basic printing support, via lilypond, tex, and xdvi.
+    - The next release will probably be in C++ rather than C.
+  * Suggest tetex-bin, for tex and xdvi.
+  * Extra patches from me (sent upstream):
+    - datastructures.h: Rename 'struct comment' to 'struct mudelacomment' to
+      avoid conflict with /usr/include/libxml2/libxml/SAX.h.
+    - importxml.c: Lots of fixes for compiler warnings, including some
+      potential segfaults.
+    - print.c: Don't ignore failures from lilypond or tex.
+  * All the Debian patches to 0.5.6 are now upstream, with the exception of
+    the fix in 0.5.6-3.
+  * No need to remove po/fr.gmo in 'debian/rules clean' any more.
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 13 Nov 2001 23:37:52 +0000
+
+denemo (0.5.6-5) unstable; urgency=low
+
+  * Adding French localization in the Debian diff broke a few things:
+    - Build-depend on gettext for msgfmt.
+    - Remove po/fr.gmo in clean target (binary files can't go in the diff).
+    (closes: #113932).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 30 Sep 2001 05:47:18 +0100
+
+denemo (0.5.6-4) unstable; urgency=low
+
+  * Upstream patches:
+    - Restore keypad +/- as sharpen/flatten keys.
+    - French localization.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 28 Sep 2001 03:23:37 +0100
+
+denemo (0.5.6-3) unstable; urgency=low
+
+  * Don't go on to try MIDI playback if lilypond fails (closes: #98202).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 31 Aug 2001 19:59:43 +0100
+
+denemo (0.5.6-2) unstable; urgency=low
+
+  * Fix "End At Bar" playback option (closes: #109507).
+  * Update to policy version 3.5.6.
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 26 Aug 2001 00:02:42 +0100
+
+denemo (0.5.6-1) unstable; urgency=low
+
+  * New upstream release.
+  * Patch to use xml2-config rather than xml-config, and build-depend on
+    libxml2-dev.
+  * Should work fine with lilypond 1.4 now (closes: #105348).
+
+ -- Colin Watson <cjwatson@debian.org>  Sat, 21 Jul 2001 00:15:15 +0100
+
+denemo (0.5.5-2) unstable; urgency=low
+
+  * New maintainer address. Thanks to Anthony Fok for his sponsorship until
+    now.
+  * Standards-Version: 3.5.2: no changes required.
+  * Move to debhelper v3.
+
+ -- Colin Watson <cjwatson@debian.org>  Thu,  1 Mar 2001 01:49:38 +0000
+
+denemo (0.5.5-1) unstable; urgency=low
+
+  * New upstream release
+  * Standards-Version: 3.2.1: no changes required.
+  * dh_strip knows about DEB_BUILD_OPTIONS=nostrip as of debhelper 2.1.6.
+  * denemo now has customizable keymaps, stored in
+    /etc/denemo/denemo.keymaprc and/or ~/.denemo/keymaprc. There are
+    examples in /usr/share/doc/denemo/examples, or you can just use the
+    menus.
+
+ -- Colin Watson <cjw44@flatline.org.uk>  Tue, 14 Nov 2000 12:14:30 +0000
+
+denemo (0.5.4-1) unstable; urgency=low
+
+  * New upstream release
+  * Standards-Version: 3.2.0:
+    - Support debug and nostrip in $DEB_BUILD_OPTIONS.
+  * libglib1.2-dev is pulled in by libgtk1.2-dev anyway, but we use glib
+    functions so we should really build-depend upon it directly.
+
+ -- Colin Watson <cjw44@flatline.org.uk>  Fri, 11 Aug 2000 16:43:24 +0100
+
+denemo (0.5.3-4) unstable; urgency=low
+
+  * Added configure target to debian/rules.
+  * Corrected build dependencies. (Closes: #65675)
+
+ -- Colin Watson <cjw44@flatline.org.uk>  Fri, 16 Jun 2000 17:17:20 +0100
+
+denemo (0.5.3-3) unstable; urgency=low
+
+  * Standards-Version: 3.1.1 and Build-Depends line (thanks to Anthony Fok).
+  * /usr/share/doc/denemo/INSTALL removed (ditto).
+  * List of upstream authors in the copyright file corrected (ditto).
+  * New maintainer address.
+
+ -- Colin Watson <cjw44@flatline.org.uk>  Sat, 20 May 2000 00:46:49 +0100
+
+denemo (0.5.3-2) unstable; urgency=low
+
+  * denemo.conf now goes in /etc/denemo rather than /etc, and is a conffile.
+  * SYSCONFDIR is now defined in $CPPFLAGS rather than in config.h.
+  * Fix the misuse of debhelper that caused update-menus to be called twice on
+    removal.
+  * Add note in denemo.conf that timidity may be used instead of playmidi for
+    software MIDI support.
+
+ -- Colin Watson <cjw44@cam.ac.uk>  Fri, 28 Apr 2000 20:00:52 +0100
+
+denemo (0.5.3-1) unstable; urgency=low
+
+  * New upstream release
+  * Man page now refers to the README rather than duplicating it.
+  * Denemo is now part of the GNU Project, so acknowledge this.
+  * Suggest playmidi or timidity.
+
+ -- Colin Watson <cjw44@cam.ac.uk>  Thu, 27 Apr 2000 10:32:20 +0100
+
+denemo (0.5.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Colin Watson <cjw44@cam.ac.uk>  Tue,  4 Apr 2000 22:30:32 +0100
+
+denemo (0.5.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Man page updates.
+  * Compile with -O2 (policy 4.1).
+
+ -- Colin Watson <cjw44@cam.ac.uk>  Mon, 27 Mar 2000 03:02:19 +0100
+
+denemo (0.5.0-1) unstable; urgency=low
+
+  * New upstream release. From the upstream maintainer:
+      "This is the release where I'm going to stop saying that Denemo is on the
+      verge of usability, and start saying that it is instead out-and-out
+      usable."
+
+ -- Colin Watson <cjw44@cam.ac.uk>  Wed, 22 Mar 2000 13:09:58 +0000
+
+denemo (0.3.5-1) unstable; urgency=low
+
+  * New upstream release
+  * Man page updates.
+
+ -- Colin Watson <cjw44@cam.ac.uk>  Thu,  2 Mar 2000 13:24:42 +0000
+
+denemo (0.3.4-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Colin Watson <cjw44@cam.ac.uk>  Wed,  1 Mar 2000 02:19:01 +0000

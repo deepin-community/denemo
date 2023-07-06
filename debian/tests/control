@@ -1,0 +1,2 @@
+Tests: integration unit
+Depends: @, lilypond, shunit2

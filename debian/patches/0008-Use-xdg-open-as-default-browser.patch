@@ -1,0 +1,18 @@
+Description: Use xdg-open instead of firefox as default browser
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Forwarded: no
+Last-Update: 2022-06-18
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/src/core/prefops.c
++++ b/src/core/prefops.c
+@@ -78,7 +78,7 @@
+ 
+   ret->imageviewer = g_string_new ("");
+ #else /* !G_OS_WIN32 */
+-  ret->browser = g_string_new ("firefox");
++  ret->browser = g_string_new ("xdg-open");
+   ret->graphicseditor = g_string_new ("inkscape");
+   ret->ghostscript = g_string_new ("gs");
+   ret->imageviewer = g_string_new ("eog");

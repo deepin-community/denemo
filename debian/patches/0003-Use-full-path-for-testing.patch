@@ -1,0 +1,30 @@
+From: Josue Abarca <jmaslibre@debian.org>
+Date: Fri, 12 Feb 2016 17:06:21 +0100
+Subject: Use full path for testing
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+Description: During the test execution using the full path to the
+ binary instead of using a relative path, this allows one to make
+ builds out of the tree.
+Forwarded: no
+Author: Josué Abarca <jmaslibre@debian.org>
+Last-Update: 2014-08-31
+---
+ tests/common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/common.h b/tests/common.h
+index fec7a15..f3c5015 100644
+--- a/tests/common.h
++++ b/tests/common.h
+@@ -3,7 +3,7 @@
+ 
+ #include <glib.h>
+ 
+-#define DENEMO "../src/denemo"
++#define DENEMO PACKAGE_SOURCE_DIR "/src/denemo"
+ #define EXAMPLE_DIR "examples"
+ #define FIXTURES_DIR "fixtures"
+ #define TEMP_DIR "tmp"

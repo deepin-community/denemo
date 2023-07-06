@@ -1,0 +1,6 @@
+usr/bin/annotator
+usr/bin/cairo_svg2path
+usr/bin/generate_source
+usr/bin/pageswitcher
+usr/bin/pageturner
+usr/bin/twopageturner
